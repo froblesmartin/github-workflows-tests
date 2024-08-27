@@ -1,0 +1,36 @@
+name: Testing debug mode
+
+on: {}
+  # push:
+
+jobs:
+  print:
+    runs-on: ubuntu-latest
+    steps:
+      - name: print envs
+        run: env
+      - name: print envs with debug
+        run: env | grep -i debug
+      - name: print GitHub envs
+        run: env | grep -i github
+      - name: condition with RUNNER_DEBUG
+        run: |
+          if [[ "$RUNNER_DEBUG" = "1" ]]; then
+            echo "Running in debug mode"
+          else
+            echo "NOT running in debug mode"
+          fi
+      - name: using debug mode in step conditional from runner.debug
+        if: ${{ runner.debug == '1' }}
+        run: |
+          echo "Running in debug mode"
+      - name: using debug message
+        run: |
+          echo "::debug::Running in debug mode"
+      - name: condition with ACTIONS_STEP_DEBUG
+        run: |
+          if [[ "${{ vars.ACTIONS_STEP_DEBUG }}" = "true" ]]; then
+            echo "Running in debug mode, ACTIONS_STEP_DEBUG is true"
+          else
+            echo "NOT running in debug mode"
+          fi

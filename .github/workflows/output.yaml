@@ -1,0 +1,28 @@
+name: Testing output
+
+on: {}
+  # push:
+
+jobs:
+  print:
+    runs-on: ubuntu-latest
+    steps:
+      - name: store output and print GITHUB_OUTPUT
+        id: store-output
+        run:
+          echo "variable_name=variable-value" >> "$GITHUB_OUTPUT";
+          echo "variable_name2=variable-value2" >> "$GITHUB_OUTPUT";
+          echo "variable_name3=variable-value3" >> "$GITHUB_OUTPUT";
+          echo "variable_name4=variable-value4" >> "$GITHUB_OUTPUT";
+          echo "aaaa=aaaa" >> "$GITHUB_OUTPUT";
+          echo "$GITHUB_OUTPUT";
+          cat $GITHUB_OUTPUT
+      - name: print output
+        run: echo ${{ steps.store-output.outputs.variable_name }}
+      - name: store and print output at once
+        id: store-output2
+        run: |
+          internal_variable=12345
+          echo "variable_name2=$internal_variable" | tee -a "${GITHUB_OUTPUT}"
+      - name: print output2
+        run: echo ${{ steps.store-output2.outputs.variable_name2 }}
