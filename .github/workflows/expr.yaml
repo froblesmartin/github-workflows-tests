@@ -1,0 +1,26 @@
+name: Testing expressions
+
+on:
+  push:
+
+env:
+  MY_JSON: '{"main":{"key1":"value1"}}'
+
+jobs:
+  print:
+    runs-on: ubuntu-latest
+    steps:
+      - name: print envs1
+        run: |
+          echo "${{ env.MY_JSON }}"
+      - name: print envs2
+        env:
+          MY_JSON2: ${{ toJson(env.MY_JSON) }}
+        run: |
+          echo "${{ env.MY_JSON2 }}"
+          echo "${{ env.MY_JSON2.main }}"
+          echo "${{ env.MY_JSON2.main.key1 }}"
+          echo "${{ fromJson(env.MY_JSON2) }}"
+          echo "${{ fromJson(env.MY_JSON2).main }}"
+          echo "${{ fromJson(env.MY_JSON2).main.key1 }}"
+          
