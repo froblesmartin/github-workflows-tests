@@ -1,0 +1,28 @@
+name: Testing environments
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  print:
+    runs-on: ubuntu-latest
+    steps:
+      - name: print envs
+        run: echo "Hola! :) This environment is ${{ vars.ENVIRONMENT_NAME }}"
+
+  print-stg:
+    needs: print
+    runs-on: ubuntu-latest
+    environment: stg
+    steps:
+      - name: print envs
+        run: echo "Hola! :) This environment is ${{ vars.ENVIRONMENT_NAME }}"
+
+  print-prod2:
+    needs: print-stg
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: print envs
+        run: echo "Hola! :) This environment is ${{ vars.ENVIRONMENT_NAME }}"
