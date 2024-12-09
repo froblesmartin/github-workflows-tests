@@ -19,10 +19,16 @@ jobs:
       - name: print envs
         run: echo "Hola! :) This environment is ${{ vars.ENVIRONMENT_NAME }}"
 
-  print-prod2:
+  print-prod:
     needs: print-stg
     runs-on: ubuntu-latest
     environment: prod
     steps:
       - name: print envs
         run: echo "Hola! :) This environment is ${{ vars.ENVIRONMENT_NAME }}"
+
+  print-from-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: print envs
+        run: echo "Hola! :) This is a change not in the default branch (main)."
