@@ -1,7 +1,8 @@
 name: Testing debug mode
 
-on: {}
-  # push:
+on:
+  push:
+  workflow_dispatch:
 
 jobs:
   print:
